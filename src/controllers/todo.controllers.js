@@ -79,9 +79,49 @@ const createTodo = async function ( req, res, next )
   }
  }
 
-const updateTodo = function ( req, res, next ) { }
+const updateTodo = async function ( req, res, next )
+{ 
+  try {
+    const { id } = req.params
+    const { title, completed } = req.body
 
-const deleteTodo = function ( req, res, next ) { }
+    const todo = await Todo.findOneAndUpdate( {
+      _id: id,
+    }, { title, completed}, {new: true});
+
+    return res.status( 200 ).json( {
+      success: true,
+      message: 'Todo updated successfully',
+      data: {
+        todo: todo,
+      }
+    })
+  } catch (e) {
+    return res.status( 422 ).json( {
+      success: false,
+      message: e.message,
+    })
+  }
+}
+
+const deleteTodo = async function ( req, res, next )
+{
+  try {
+    const { id } = req.params
+    
+    await Todo.findByIdAndDelete( id );
+
+    return res.status( 200 ).json( {
+      success: true,
+      message: 'Todo deleted'
+    })
+  } catch (e) {
+    return res.status( 422 ).json( {
+      success: true,
+      message: e.message
+    })
+  }
+ }
 
 // export handlers
 export

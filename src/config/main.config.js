@@ -1,10 +1,13 @@
+import * as dotenv from 'dotenv';
+dotenv.config()
+
 const config = {
     server: {
-        port: 3333,
+        port: parseInt(process.env.PORT),
     },
     db: {
         type: 'mongodb', // 'postgres
-        uri: "mongodb://127.0.0.1:27017/todos?retryWrites=true&w=majority"
+        uri: process.env.MONGODB_URI
     }
 }
 

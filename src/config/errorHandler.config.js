@@ -8,11 +8,9 @@ const errorHandler = function (payload, schema) {
     error.details.forEach((item) => {
         let key = item.context.key;
 
-      let errorBag = {
+      errors[key] = {
         message: item.message,
       };
-
-      errors[key] = errorBag;
     });
 
     return errors;
